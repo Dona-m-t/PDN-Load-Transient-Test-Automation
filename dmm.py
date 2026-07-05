@@ -1,15 +1,21 @@
-"""
-Digital Multimeter Module
-Keithley DMM6500
-"""
-
+# ----------------------------------------------------------
+# dmm.py
+# Controls the Keithley DMM6500 Digital Multimeter
+# ----------------------------------------------------------
 import pyvisa
-
 class DigitalMultimeter:
-
     def __init__(self, address):
-        rm = pyvisa.ResourceManager()
-        self.instrument = rm.open_resource(address)
-
+        """
+        Connect to the Digital Multimeter
+        using its VISA address.
+        """
+        resource_manager = pyvisa.ResourceManager()
+        self.instrument = resource_manager.open_resource(address)
+        
     def measure_voltage(self):
-        return self.instrument.query("MEAS:VOLT?")
+        """
+        Measure the output voltage.
+        """
+        voltage = self.instrument.query("MEAS:VOLT?")
+        print(f"Measured Voltage : {voltage}")
+        return voltage
